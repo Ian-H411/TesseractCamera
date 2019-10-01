@@ -26,7 +26,7 @@ class ViewController: UIViewController, G8TesseractDelegate, AVCapturePhotoCaptu
     
     var stillImageOutput: AVCapturePhotoOutput!
 
-    @IBOutlet weak var cameraLayer: UIView!
+ 
     
     var guideRectangle:CGRect?
     
@@ -41,7 +41,7 @@ class ViewController: UIViewController, G8TesseractDelegate, AVCapturePhotoCaptu
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         session = AVCaptureSession()
-        session?.sessionPreset = .photo
+
         guard let backCamera = AVCaptureDevice.default(for: .video)
             else {
                 print("no camera")
@@ -51,7 +51,7 @@ class ViewController: UIViewController, G8TesseractDelegate, AVCapturePhotoCaptu
             let input = try AVCaptureDeviceInput(device: backCamera)
             stillImageOutput = AVCapturePhotoOutput()
             let dimensions = CMVideoFormatDescriptionGetDimensions(input.device.activeFormat.formatDescription)
-            let rectangle = CGRect(x: cameraLayer.frame.width * 0.1, y: cameraLayer.frame.maxY / 3, width: cameraLayer.frame.width * 0.8, height: cameraLayer.frame.height / 4)
+            let rectangle = CGRect(x: view.frame.width, y: view.frame.minY, width: view.frame.width, height: view.frame.height)
         
             guideRectangle = rectangle
             if session!.canAddInput(input) && session!.canAddOutput(stillImageOutput){
@@ -79,8 +79,9 @@ class ViewController: UIViewController, G8TesseractDelegate, AVCapturePhotoCaptu
         view.layer.addSublayer(videoPreviewLayer)
         DispatchQueue.main.async {
             self.session?.startRunning()
-            self.videoPreviewLayer?.frame = self.cameraLayer.frame
+            self.videoPreviewLayer?.frame = self.view.frame
             self.view.addSubview(drawnRectangle)
+    
         }
         
     }
