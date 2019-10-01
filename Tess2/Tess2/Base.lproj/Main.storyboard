@@ -32,7 +32,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="FUI-5y-zYy">
-                                <rect key="frame" x="248.5" y="461" width="165.5" height="165.5"/>
+                                <rect key="frame" x="83" y="34.5" width="248" height="248.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="FUI-5y-zYy" secondAttribute="height" multiplier="1:1" id="ZdA-JL-dk8"/>
                                 </constraints>
@@ -40,11 +40,11 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="FUI-5y-zYy" firstAttribute="width" secondItem="6Tk-OE-BBY" secondAttribute="width" multiplier="0.4" id="0cI-8A-hwY"/>
+                            <constraint firstItem="FUI-5y-zYy" firstAttribute="width" secondItem="6Tk-OE-BBY" secondAttribute="width" multiplier="0.6" id="0cI-8A-hwY"/>
                             <constraint firstItem="iYp-QJ-Doa" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" multiplier="1.47" id="5js-Fx-jbb"/>
                             <constraint firstItem="iYp-QJ-Doa" firstAttribute="width" secondItem="6Tk-OE-BBY" secondAttribute="width" id="FFB-R3-Ak5"/>
-                            <constraint firstItem="FUI-5y-zYy" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" multiplier="1.6" id="JXh-Dr-5p2"/>
-                            <constraint firstItem="FUI-5y-zYy" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" multiplier="1.2" id="Pdc-m6-QL1"/>
+                            <constraint firstItem="FUI-5y-zYy" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="JXh-Dr-5p2"/>
+                            <constraint firstItem="FUI-5y-zYy" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" multiplier="0.35" id="Pdc-m6-QL1"/>
                             <constraint firstItem="XuV-4l-X7e" firstAttribute="height" secondItem="6Tk-OE-BBY" secondAttribute="height" multiplier="0.1" id="TEI-u2-FyU"/>
                             <constraint firstItem="iYp-QJ-Doa" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="XHB-t2-SmP"/>
                             <constraint firstItem="XuV-4l-X7e" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" multiplier="1.65" id="cOj-vz-u4P"/>

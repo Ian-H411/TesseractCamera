@@ -30,6 +30,10 @@ class ViewController: UIViewController, G8TesseractDelegate, AVCapturePhotoCaptu
     
     var guideRectangle:CGRect?
     
+  
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -50,8 +54,8 @@ class ViewController: UIViewController, G8TesseractDelegate, AVCapturePhotoCaptu
         do {
             let input = try AVCaptureDeviceInput(device: backCamera)
             stillImageOutput = AVCapturePhotoOutput()
-            let dimensions = CMVideoFormatDescriptionGetDimensions(input.device.activeFormat.formatDescription)
-            let rectangle = CGRect(x: view.frame.width, y: view.frame.minY, width: view.frame.width, height: view.frame.height)
+            var rectangle = CGRect(x: view.frame.height, y: view.frame.minY, width: view.frame.width, height: view.frame.height / 12)
+            rectangle.origin = CGPoint(x: 0, y: (view.frame.height/2) - rectangle.height)
         
             guideRectangle = rectangle
             if session!.canAddInput(input) && session!.canAddOutput(stillImageOutput){
@@ -71,12 +75,12 @@ class ViewController: UIViewController, G8TesseractDelegate, AVCapturePhotoCaptu
     func setUpLivePreview(){
         guard let session = session else {return}
         videoPreviewLayer = AVCaptureVideoPreviewLayer(session: session)
-        videoPreviewLayer?.videoGravity = .resizeAspect
+        videoPreviewLayer?.videoGravity = .resize
         videoPreviewLayer?.connection?.videoOrientation = .portrait
         guard let videoPreviewLayer = videoPreviewLayer else {return}
         let drawnRectangle = Draw(frame: guideRectangle!)
         
-        view.layer.addSublayer(videoPreviewLayer)
+       view.layer.insertSublayer(videoPreviewLayer, at: 0)
         DispatchQueue.main.async {
             self.session?.startRunning()
             self.videoPreviewLayer?.frame = self.view.frame
@@ -89,9 +93,15 @@ class ViewController: UIViewController, G8TesseractDelegate, AVCapturePhotoCaptu
         guard let imageData = photo.fileDataRepresentation() else {return}
         guard let image = UIImage(data: imageData) else {return}
         imagePreview.isHidden = false
-        guard let imageToFeedReference = image.cgImage?.cropping(to: guideRectangle!) else {return}
-        let imagetofeed = UIImage(cgImage: imageToFeedReference)
-        startTesseract(image: imagetofeed)
+        var cropArea = CGRect(x:0, y: 0, width: image.size.height / 8, height: image.size.width)
+        cropArea.origin = CGPoint(x: (image.size.width/2) - image.size.width, y: 0)
+//        cropArea.size.width *= image.scale
+//        cropArea.size.height *= image.scale
+//        cropArea.origin.x *= image.scale
+//        cropArea.origin.y *= image.scale
+
+        startTesseract(image: image)
+       
     }
     
     
@@ -104,17 +114,45 @@ class ViewController: UIViewController, G8TesseractDelegate, AVCapturePhotoCaptu
     func startTesseract(image:UIImage){
         tesseract.delegate = self
         tesseract.charWhitelist = "ABCDEFGHJKLMNPRSTUVWXYZ1234567890"
-        
+        guard var guideRectangle = guideRectangle else {return}
+        guideRectangle.size.width = image.size.width
+        guideRectangle.size.height = image.size.height/12
+                guideRectangle.origin.x *= image.scale
+                guideRectangle.origin.y *= image.scale
+        guideRectangle.origin.y += 400
         tesseract.image = image
-        tesseract.rect = guideRectangle!
+        tesseract.rect = guideRectangle
+        
         tesseract.sourceResolution = 300
         tesseract.recognize()
         DispatchQueue.main.async {
-            self.imagePreview.image = self.tesseract.image
+            self.imagePreview.image = self.tesseract.thresholdedImage
         }
         outputlabel.text = tesseract.recognizedText
    
     }
+    func rotateRect(_ rect: CGRect) -> CGRect {
+        let x = rect.minX
+        let y = rect.minY
+        let transform = CGAffineTransform(translationX: -x, y: -y)
+                            .rotated(by: .pi / 2)
+                            .translatedBy(x: x, y: y)
+        return rect.applying(transform)
+    }
 
 }
 
+
+extension UIImage {
+    func crop( rect: CGRect) -> UIImage {
+        var rect = rect
+        rect.origin.x*=self.scale
+        rect.origin.y*=self.scale
+        rect.size.width*=self.scale
+        rect.size.height*=self.scale
+
+        let imageRef = self.cgImage!.cropping(to: rect)
+        let image = UIImage(cgImage: imageRef!, scale: self.scale, orientation: self.imageOrientation)
+        return image
+    }
+}
