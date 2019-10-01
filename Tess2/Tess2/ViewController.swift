@@ -9,8 +9,9 @@
 import UIKit
 import TesseractOCR
 import AVFoundation
+import CoreGraphics
 
-class ViewController: UIViewController, G8TesseractDelegate,  UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class ViewController: UIViewController, G8TesseractDelegate, AVCapturePhotoCaptureDelegate {
     let tesseract: G8Tesseract = G8Tesseract(language: "eng")
     
     var isTesseractEnabled:Bool = false
@@ -22,22 +23,25 @@ class ViewController: UIViewController, G8TesseractDelegate,  UIImagePickerContr
     var session: AVCaptureSession?
     
     var videoPreviewLayer: AVCaptureVideoPreviewLayer?
+    
     var stillImageOutput: AVCapturePhotoOutput!
 
+    @IBOutlet weak var cameraLayer: UIView!
     
+    var guideRectangle:CGRect?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
         print("running ocr")
-                
+        imagePreview.isHidden = true
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         session = AVCaptureSession()
-        session?.sessionPreset = .medium
+        session?.sessionPreset = .photo
         guard let backCamera = AVCaptureDevice.default(for: .video)
             else {
                 print("no camera")
@@ -46,16 +50,20 @@ class ViewController: UIViewController, G8TesseractDelegate,  UIImagePickerContr
         do {
             let input = try AVCaptureDeviceInput(device: backCamera)
             stillImageOutput = AVCapturePhotoOutput()
-            if session!.canAddInput(input) && session!.canAddOutput(stillimageoutput){
+            let dimensions = CMVideoFormatDescriptionGetDimensions(input.device.activeFormat.formatDescription)
+            let rectangle = CGRect(x: cameraLayer.frame.width * 0.1, y: cameraLayer.frame.maxY / 3, width: cameraLayer.frame.width * 0.8, height: cameraLayer.frame.height / 4)
+        
+            guideRectangle = rectangle
+            if session!.canAddInput(input) && session!.canAddOutput(stillImageOutput){
                 session!.addInput(input)
-                session!.addOutput(stillimageoutput)
+                session!.addOutput(stillImageOutput)
                 setUpLivePreview()
             }
         } catch  {
             print("there was an error in \(#function) :\(error) : \(error.localizedDescription)")
         }
-        
-        
+
+
     }
     func shouldCancelImageRecognition(for tesseract: G8Tesseract!) -> Bool {
         isTesseractEnabled
@@ -66,32 +74,43 @@ class ViewController: UIViewController, G8TesseractDelegate,  UIImagePickerContr
         videoPreviewLayer?.videoGravity = .resizeAspect
         videoPreviewLayer?.connection?.videoOrientation = .portrait
         guard let videoPreviewLayer = videoPreviewLayer else {return}
+        let drawnRectangle = Draw(frame: guideRectangle!)
+        
         view.layer.addSublayer(videoPreviewLayer)
         DispatchQueue.main.async {
             self.session?.startRunning()
-            self.videoPreviewLayer?.frame = self.view.bounds
+            self.videoPreviewLayer?.frame = self.cameraLayer.frame
+            self.view.addSubview(drawnRectangle)
         }
         
+    }
+    func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
+        guard let imageData = photo.fileDataRepresentation() else {return}
+        guard let image = UIImage(data: imageData) else {return}
+        imagePreview.isHidden = false
+        guard let imageToFeedReference = image.cgImage?.cropping(to: guideRectangle!) else {return}
+        let imagetofeed = UIImage(cgImage: imageToFeedReference)
+        startTesseract(image: imagetofeed)
     }
     
     
     @IBAction func takeAPicButtonTapped(_ sender: Any) {
         let settings = AVCapturePhotoSettings(format: [AVVideoCodecKey:AVVideoCodecType.jpeg])
-        stillImageOutput.capturePhoto(with: <#T##AVCapturePhotoSettings#>, delegate: <#T##AVCapturePhotoCaptureDelegate#>)
+        stillImageOutput.capturePhoto(with: settings, delegate: self)
     }
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        if let pickedImage = info[.originalImage] as? UIImage{
-      
-            startTesseract(image: pickedImage)
-        }
-         picker.dismiss(animated: true, completion: nil)
-    }
+    
     func startTesseract(image:UIImage){
         tesseract.delegate = self
-    
+        tesseract.charWhitelist = "ABCDEFGHJKLMNPRSTUVWXYZ1234567890"
+        
         tesseract.image = image
+        tesseract.rect = guideRectangle!
+        tesseract.sourceResolution = 300
         tesseract.recognize()
+        DispatchQueue.main.async {
+            self.imagePreview.image = self.tesseract.image
+        }
         outputlabel.text = tesseract.recognizedText
    
     }
