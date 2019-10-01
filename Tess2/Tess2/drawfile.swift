@@ -25,7 +25,7 @@ class Draw: UIView {
         let color:UIColor = UIColor.red
 
         let bpath:UIBezierPath = UIBezierPath(rect: rect)
-        bpath.lineWidth = 15
+        bpath.lineWidth = 8
         UIColor.clear.setFill()
         bpath.fill()
         color.set()

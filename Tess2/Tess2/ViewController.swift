@@ -54,7 +54,7 @@ class ViewController: UIViewController, G8TesseractDelegate, AVCapturePhotoCaptu
         do {
             let input = try AVCaptureDeviceInput(device: backCamera)
             stillImageOutput = AVCapturePhotoOutput()
-            var rectangle = CGRect(x: view.frame.height, y: view.frame.minY, width: view.frame.width, height: view.frame.height / 12)
+            var rectangle = CGRect(x: view.frame.height, y: view.frame.minY, width: view.frame.width, height: view.frame.height / 22)
             rectangle.origin = CGPoint(x: 0, y: (view.frame.height/2) - rectangle.height)
         
             guideRectangle = rectangle
@@ -116,10 +116,10 @@ class ViewController: UIViewController, G8TesseractDelegate, AVCapturePhotoCaptu
         tesseract.charWhitelist = "ABCDEFGHJKLMNPRSTUVWXYZ1234567890"
         guard var guideRectangle = guideRectangle else {return}
         guideRectangle.size.width = image.size.width
-        guideRectangle.size.height = image.size.height/12
+        guideRectangle.size.height = image.size.height/22
                 guideRectangle.origin.x *= image.scale
                 guideRectangle.origin.y *= image.scale
-        guideRectangle.origin.y += 400
+        guideRectangle.origin.y += 470
         tesseract.image = image
         tesseract.rect = guideRectangle
         
