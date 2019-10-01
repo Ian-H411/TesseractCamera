@@ -15,6 +15,7 @@
 		25FAC55223429E28004EB393 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 25FAC55123429E28004EB393 /* Assets.xcassets */; };
 		25FAC55523429E28004EB393 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 25FAC55323429E28004EB393 /* LaunchScreen.storyboard */; };
 		25FAC55D2342A016004EB393 /* tessdata in Resources */ = {isa = PBXBuildFile; fileRef = 25FAC55C2342A016004EB393 /* tessdata */; };
+		25FAC55F2343C046004EB393 /* drawfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25FAC55E2343C045004EB393 /* drawfile.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +28,7 @@
 		25FAC55423429E28004EB393 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		25FAC55623429E28004EB393 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		25FAC55C2342A016004EB393 /* tessdata */ = {isa = PBXFileReference; lastKnownFileType = folder; path = tessdata; sourceTree = "<group>"; };
+		25FAC55E2343C045004EB393 /* drawfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = drawfile.swift; sourceTree = "<group>"; };
 		275207FB622422A93242E2A4 /* Pods_Tess2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tess2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F563CAA6656ADF885E0B88E /* Pods-Tess2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tess2.debug.xcconfig"; path = "Target Support Files/Pods-Tess2/Pods-Tess2.debug.xcconfig"; sourceTree = "<group>"; };
 		836BEAB447DD7A7AEB98DBE2 /* Pods-Tess2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tess2.release.xcconfig"; path = "Target Support Files/Pods-Tess2/Pods-Tess2.release.xcconfig"; sourceTree = "<group>"; };
@@ -73,6 +75,7 @@
 				25FAC55123429E28004EB393 /* Assets.xcassets */,
 				25FAC55323429E28004EB393 /* LaunchScreen.storyboard */,
 				25FAC55623429E28004EB393 /* Info.plist */,
+				25FAC55E2343C045004EB393 /* drawfile.swift */,
 			);
 			path = Tess2;
 			sourceTree = "<group>";
@@ -213,6 +216,7 @@
 				25FAC54D23429E27004EB393 /* ViewController.swift in Sources */,
 				25FAC54923429E27004EB393 /* AppDelegate.swift in Sources */,
 				25FAC54B23429E27004EB393 /* SceneDelegate.swift in Sources */,
+				25FAC55F2343C046004EB393 /* drawfile.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

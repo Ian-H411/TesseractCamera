@@ -31,28 +31,39 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FUI-5y-zYy">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="624"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="FUI-5y-zYy">
+                                <rect key="frame" x="248.5" y="461" width="165.5" height="165.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="FUI-5y-zYy" secondAttribute="height" multiplier="1:1" id="ZdA-JL-dk8"/>
+                                </constraints>
                             </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hD7-XL-Wp4">
+                                <rect key="frame" x="0.0" y="44.5" width="414" height="409"/>
+                                <color key="backgroundColor" systemColor="systemYellowColor" red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstItem="FUI-5y-zYy" firstAttribute="width" secondItem="6Tk-OE-BBY" secondAttribute="width" multiplier="0.4" id="0cI-8A-hwY"/>
                             <constraint firstItem="iYp-QJ-Doa" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" multiplier="1.47" id="5js-Fx-jbb"/>
                             <constraint firstItem="iYp-QJ-Doa" firstAttribute="width" secondItem="6Tk-OE-BBY" secondAttribute="width" id="FFB-R3-Ak5"/>
-                            <constraint firstItem="FUI-5y-zYy" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" constant="-44" id="Sdc-xa-0iA"/>
+                            <constraint firstItem="hD7-XL-Wp4" firstAttribute="height" secondItem="6Tk-OE-BBY" secondAttribute="height" multiplier="0.5" id="Gks-6w-Yxu"/>
+                            <constraint firstItem="FUI-5y-zYy" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" multiplier="1.6" id="JXh-Dr-5p2"/>
+                            <constraint firstItem="hD7-XL-Wp4" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" multiplier="0.55" id="JzR-WO-EQM"/>
+                            <constraint firstItem="hD7-XL-Wp4" firstAttribute="width" secondItem="6Tk-OE-BBY" secondAttribute="width" id="OEP-Cg-LxJ"/>
+                            <constraint firstItem="FUI-5y-zYy" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" multiplier="1.2" id="Pdc-m6-QL1"/>
                             <constraint firstItem="XuV-4l-X7e" firstAttribute="height" secondItem="6Tk-OE-BBY" secondAttribute="height" multiplier="0.1" id="TEI-u2-FyU"/>
-                            <constraint firstItem="FUI-5y-zYy" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="iYp-QJ-Doa" secondAttribute="trailing" id="Uhf-PW-bYO"/>
                             <constraint firstItem="iYp-QJ-Doa" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="XHB-t2-SmP"/>
                             <constraint firstItem="XuV-4l-X7e" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" multiplier="1.65" id="cOj-vz-u4P"/>
                             <constraint firstItem="XuV-4l-X7e" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="eUB-zO-l8f"/>
                             <constraint firstItem="XuV-4l-X7e" firstAttribute="width" secondItem="6Tk-OE-BBY" secondAttribute="width" id="eru-Pa-mim"/>
-                            <constraint firstItem="iYp-QJ-Doa" firstAttribute="top" secondItem="FUI-5y-zYy" secondAttribute="bottom" constant="1" id="s9D-Xw-WYa"/>
-                            <constraint firstItem="FUI-5y-zYy" firstAttribute="leading" secondItem="iYp-QJ-Doa" secondAttribute="leading" id="xon-Mz-2ON"/>
+                            <constraint firstItem="hD7-XL-Wp4" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="noe-rc-OaQ"/>
                             <constraint firstItem="iYp-QJ-Doa" firstAttribute="height" secondItem="6Tk-OE-BBY" secondAttribute="height" multiplier="0.1" id="zHg-kM-klL"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="cameraLayer" destination="hD7-XL-Wp4" id="gCM-0m-PhZ"/>
                         <outlet property="imagePreview" destination="FUI-5y-zYy" id="zgo-V6-YYg"/>
                         <outlet property="outputlabel" destination="iYp-QJ-Doa" id="cbZ-ei-110"/>
                     </connections>
